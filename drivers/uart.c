@@ -4,14 +4,14 @@
 
 #define PL011_BASE (MMIO_BASE + 0x201000)
 
-#define DR (PL011_BASE + 0x00)
-#define FR (PL011_BASE + 0x18)
-#define IBRD (PL011_BASE +0x24)
-#define FBRD (PL011_BASE + 0x28)
-#define LCRH (PL011_BASE + 0x2C)
-#define CR (PL011_BASE + 0x30)
-#define IMSC (PL011_BASE + 0x38)
-#define ICR (PL011_BASE + 0x44)
+#define DR (PL011_BASE + 0x00) // Data Register
+#define FR (PL011_BASE + 0x18) // Flag Register
+#define IBRD (PL011_BASE + 0x24) // Integer Baud Rate Divisor
+#define FBRD (PL011_BASE + 0x28) // Fractional Baud Rate Divisor
+#define LCRH (PL011_BASE + 0x2C) // Line Control Register
+#define CR (PL011_BASE + 0x30) // Control Register
+#define IMSC (PL011_BASE + 0x38) // Interupt Mask Set Clear Register
+#define ICR (PL011_BASE + 0x44) // Interupt Clear Register
 
 
 void uart_init(void) {
@@ -34,4 +34,25 @@ void uart_init(void) {
 
     /* Enable the UART, transmit, and receive. */
     mmio_write(CR, (1 << 0) | (1 << 8) | (1 << 9));
+}
+
+void uart_putc(char c) {
+    while (mmio_read(FR) & (1 << 5)) {} // bit 5 is transmit FIFO full, we wait for not full
+    mmio_write(DR, c);
+}
+
+char uart_getc(void) {
+    while (mmio_read(FR) & (1 << 4)) {} // bit 4 is receive FIFO empty, we wait for not empty
+    return mmio_read(DR);
+}
+
+void uart_puts(const char *str) {
+    int i = 0;
+    while (str[i] != '\0') {
+        if (str[i] == '\n') {
+            uart_putc('\r');
+        }
+        uart_putc(str[i]);
+        i ++;
+    }
 }
