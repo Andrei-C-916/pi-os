@@ -6,5 +6,8 @@ void kernel_main(void) {
     while (1) {
         char input = uart_getc();
         uart_putc(input);
+        if (input == '\r') {
+            uart_putc('\n');
+        }
     }
 }
