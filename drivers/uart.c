@@ -39,6 +39,12 @@ void uart_init(void) {
 void uart_putc(char c) {
     while (mmio_read(FR) & (1 << 5)) {} // bit 5 is transmit FIFO full, we wait for not full
     mmio_write(DR, c);
+    if (c == '\n') {
+        mmio_write(DR, '\r');
+    }
+    else if (c == '\r') {
+        mmio_write(DR, '\n');
+    }
 }
 
 char uart_getc(void) {
@@ -49,9 +55,6 @@ char uart_getc(void) {
 void uart_puts(const char *str) {
     int i = 0;
     while (str[i] != '\0') {
-        if (str[i] == '\n') {
-            uart_putc('\r');
-        }
         uart_putc(str[i]);
         i ++;
     }

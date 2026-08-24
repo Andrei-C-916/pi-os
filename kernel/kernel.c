@@ -1,3 +1,10 @@
+#include <uart.h> 
+
 void kernel_main(void) {
-    while (1) {}
+    uart_init();
+    uart_puts("hello, world!\n");
+    while (1) {
+        char input = uart_getc();
+        uart_putc(input);
+    }
 }
