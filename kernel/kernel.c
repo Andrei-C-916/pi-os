@@ -2,7 +2,19 @@
 
 void kernel_main(void) {
     uart_init();
-    uart_puts("hello, world!\n");
+
+    uart_puts("=== PI-OS booted ===\n");
+
+    uint64_t el;
+    asm volatile("mrs %0, CurrentEL" : "=r"(el));
+    el = (el >> 2) & 0x3;
+    uart_puts("Current Exception Level: ");
+    uart_puthex(el);
+
+    uart_puts("=== Welcome to PI-OS! ===\n");
+
+    uart_puts("\r\n");
+    
     while (1) {
         char input = uart_getc();
         uart_putc(input);

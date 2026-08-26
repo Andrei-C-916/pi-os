@@ -56,3 +56,31 @@ void uart_puts(const char *str) {
         i ++;
     }
 }
+
+void uart_puthex(uint64_t num) {
+    if (num == 0) {
+        uart_putc('0');
+        return;
+    }
+
+    int i = 0;
+    int printedStart = 0;
+    static const char digits[] = "0123456789ABCDEF";
+    while (i < 16) {
+        char nibble = (num >> 60) & 0xF;
+        char digit = digits[nibble];
+        if (nibble == 0 && !printedStart) {
+            // skip leading zeros
+        }
+        else {
+            uart_putc(digit);
+            printedStart = 1;
+        }
+        num = num << 4;
+        i++;
+    }
+}
+
+uint64_t uart_gethex(void) {
+    return 0;
+}
