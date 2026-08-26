@@ -10,6 +10,8 @@ void kernel_main(void) {
     el = (el >> 2) & 0x3;
     uart_puts("Current Exception Level: ");
     uart_puthex(el);
+    uart_putc('\n');
+    uart_putc('\r');
 
     uart_puts("=== Welcome to PI-OS! ===\n");
 
