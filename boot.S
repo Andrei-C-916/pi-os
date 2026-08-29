@@ -40,5 +40,63 @@ _exceptionLevel:
     eret
 
 _main:
+    // vector table
+    adr x0, _vectors
+    msr VBAR_EL1, x0
+
     bl kernel_main
     b _park
+
+_exceptionStub:
+    bl exceptionHandler
+    b _park
+
+.align 11
+_vectors:
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
+
+    .align 7
+    b _exceptionStub
