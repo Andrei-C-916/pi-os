@@ -1,7 +1,7 @@
 # include <uart.h>
 # include <stdint.h>
 
-void exceptionHandler(void) {
+void exception_handler(void) {
     uart_puts("There has been an exception\n");
     
     uint64_t esr;
@@ -16,4 +16,8 @@ void exceptionHandler(void) {
     uart_puts("From: ");
     uart_puthex(elr);
     uart_puts("\n");
+}
+
+void irq_exception_handler(void) {
+    uart_puts("There has been an irq\n");
 }
