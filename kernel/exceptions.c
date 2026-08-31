@@ -1,4 +1,5 @@
 # include <uart.h>
+# include <timer.h>
 # include <stdint.h>
 
 void exception_handler(void) {
@@ -20,4 +21,5 @@ void exception_handler(void) {
 
 void irq_exception_handler(void) {
     uart_puts("There has been an irq\n");
+    start_countdown(get_timer_freq());
 }

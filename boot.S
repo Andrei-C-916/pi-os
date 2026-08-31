@@ -11,7 +11,7 @@ park:
     b park
 
 stack:
-    ldr x0, =start
+    ldr x0, =_start
     mov sp, x0
 
     ldr x0, =__bss_start
@@ -82,8 +82,11 @@ exception_stub:
     restore_regs
     eret
 
-irq_exceptionStub:
+irq_exception_stub:
     save_regs
+    bl irq_exception_handler
+    restore_regs
+    eret
 
 
 .align 11
@@ -104,7 +107,7 @@ vectors:
     b exception_stub
 
     .align 7
-    b exception_stub
+    b irq_exception_stub
 
     .align 7
     b exception_stub

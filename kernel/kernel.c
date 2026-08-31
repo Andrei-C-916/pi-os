@@ -1,4 +1,5 @@
-#include <uart.h> 
+# include <uart.h>
+# include <timer.h>
 
 void kernel_main(void) {
     uart_init();
@@ -19,6 +20,8 @@ void kernel_main(void) {
 
     // test exception
     asm volatile("svc #0");
+
+    timer_init();
     
     while (1) {
         char input = uart_getc();
