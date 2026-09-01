@@ -50,6 +50,7 @@ main:
     bl kernel_main
     b park
 
+// TO-DO: When context switching we want to save all regs to stack
 .macro save_regs
     stp x0, x1, [sp, #-16]!
     stp x2, x3, [sp, #-16]!

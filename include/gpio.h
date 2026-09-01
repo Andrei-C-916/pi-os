@@ -1,5 +1,4 @@
 #pragma once
-
 #include <stdint.h>
 
 #define GPIO_FUNC_INPUT  0x0

@@ -1,5 +1,5 @@
-# include <uart.h>
-# include <timer.h>
+#include <uart.h>
+#include <timer.h>
 
 void kernel_main(void) {
     uart_init();

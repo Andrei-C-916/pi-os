@@ -1,6 +1,6 @@
-# include <uart.h>
-# include <timer.h>
-# include <stdint.h>
+#include <uart.h>
+#include <timer.h>
+#include <stdint.h>
 
 void exception_handler(void) {
     uart_puts("There has been an exception\n");

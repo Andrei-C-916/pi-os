@@ -1,4 +1,4 @@
-# include <timer.h>
+#include <timer.h>
 
 void timer_init(void) {
     uint64_t ticks = get_timer_freq();
